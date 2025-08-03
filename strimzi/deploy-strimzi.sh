@@ -14,7 +14,8 @@ fi
 kubectl wait --for=condition=Ready pod -l name=strimzi-cluster-operator -n strimzi-kafka --timeout=300s
 
 # Deploy Kafka cluster
-kubectl apply -f ./kafka-cluster.yaml
+# Make sure kafka version is 4.0+ because zookeeper is removed after 4.0.
+kubectl apply -f https://strimzi.io/examples/latest/kafka/kafka-single-node.yaml -n strimzi-kafka
 
 # Wait for Kafka cluster to be ready
 kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s -n strimzi-kafka
