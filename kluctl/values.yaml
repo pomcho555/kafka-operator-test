@@ -8,9 +8,6 @@ cluster:
     replicas: 1
     min_isr: 1
     storage_size: "10Gi"
-  zookeeper:
-    replicas: 3
-    storage_size: "10Gi"
 
 topics:
   - name: revolver-ocelot

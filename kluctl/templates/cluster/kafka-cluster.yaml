@@ -7,6 +7,7 @@ spec:
   kafka:
     version: {{ args.cluster.kafka.version }}
     replicas: {{ args.cluster.kafka.replicas }}
+    metadataVersion: 4.0-IV3
     listeners:
       - name: plain
         port: 9092
@@ -22,20 +23,27 @@ spec:
       transaction.state.log.min.isr: {{ args.cluster.kafka.min_isr }}
       default.replication.factor: {{ args.cluster.kafka.replicas }}
       min.insync.replicas: {{ args.cluster.kafka.min_isr }}
-      inter.broker.protocol.version: "{{ args.cluster.kafka.version }}"
-    storage:
-      type: jbod
-      volumes:
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: dual-role
+  labels:
+    strimzi.io/cluster: {{ args.cluster.name }}
+spec:
+  replicas: 1
+  roles:
+    - controller
+    - broker
+  storage:
+    type: jbod
+    volumes:
       - id: 0
         type: persistent-claim
         size: {{ args.cluster.kafka.storage_size }}
         deleteClaim: false
-  zookeeper:
-    replicas: {{ args.cluster.zookeeper.replicas }}
-    storage:
-      type: persistent-claim
-      size: {{ args.cluster.zookeeper.storage_size }}
-      deleteClaim: false
-  entityOperator:
-    topicOperator: {}
-    userOperator: {}
+        kraftMetadata: shared
