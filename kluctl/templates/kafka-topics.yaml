@@ -1,0 +1,16 @@
+{{ range .topics }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.namespace }}
+  labels:
+    strimzi.io/cluster: {{ $.cluster_name }}
+spec:
+  partitions: {{ .partitions }}
+  replicas: {{ .replicas }}
+  config:
+    retention.ms: {{ .retention_ms }}
+    min.insync.replicas: {{ .min_insync_replicas }}
+{{ end }}

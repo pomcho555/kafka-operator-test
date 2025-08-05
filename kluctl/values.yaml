@@ -1,0 +1,38 @@
+namespace: strimzi-kafka
+cluster_name: my-cluster
+
+cluster:
+  name: my-cluster
+  kafka:
+    version: "4.0.0"
+    replicas: 1
+    min_isr: 1
+    storage_size: "10Gi"
+  zookeeper:
+    replicas: 3
+    storage_size: "10Gi"
+
+topics:
+  - name: revolver-ocelot
+    partitions: 10
+    replicas: 1
+    retention_ms: 86400000
+    min_insync_replicas: 1
+  
+  - name: psycho-mantis
+    partitions: 10
+    replicas: 1
+    retention_ms: 86400000
+    min_insync_replicas: 1
+  
+  - name: sniper-wolf
+    partitions: 10
+    replicas: 1
+    retention_ms: 86400000
+    min_insync_replicas: 1
+  
+  - name: liquid-snake
+    partitions: 10
+    replicas: 1
+    retention_ms: 86400000
+    min_insync_replicas: 1

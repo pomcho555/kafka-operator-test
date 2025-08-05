@@ -1,0 +1,6 @@
+targets:
+  - name: strimzi-kafka
+    context: kind-kafka
+    args:
+      namespace: strimzi-kafka
+      cluster_name: my-cluster

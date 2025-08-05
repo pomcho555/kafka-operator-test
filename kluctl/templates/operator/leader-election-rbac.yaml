@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: strimzi-cluster-operator-leases
+  namespace: {{ args.namespace }}
+rules:
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "list", "create", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: strimzi-cluster-operator-leases
+  namespace: {{ args.namespace }}
+subjects:
+- kind: ServiceAccount
+  name: strimzi-cluster-operator
+  namespace: {{ args.namespace }}
+roleRef:
+  kind: Role
+  name: strimzi-cluster-operator-leases
+  apiGroup: rbac.authorization.k8s.io

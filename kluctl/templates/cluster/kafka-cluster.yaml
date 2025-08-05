@@ -1,0 +1,41 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: {{ args.cluster.name }}
+  namespace: {{ args.namespace }}
+spec:
+  kafka:
+    version: {{ args.cluster.kafka.version }}
+    replicas: {{ args.cluster.kafka.replicas }}
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+    config:
+      offsets.topic.replication.factor: {{ args.cluster.kafka.replicas }}
+      transaction.state.log.replication.factor: {{ args.cluster.kafka.replicas }}
+      transaction.state.log.min.isr: {{ args.cluster.kafka.min_isr }}
+      default.replication.factor: {{ args.cluster.kafka.replicas }}
+      min.insync.replicas: {{ args.cluster.kafka.min_isr }}
+      inter.broker.protocol.version: "{{ args.cluster.kafka.version }}"
+    storage:
+      type: jbod
+      volumes:
+      - id: 0
+        type: persistent-claim
+        size: {{ args.cluster.kafka.storage_size }}
+        deleteClaim: false
+  zookeeper:
+    replicas: {{ args.cluster.zookeeper.replicas }}
+    storage:
+      type: persistent-claim
+      size: {{ args.cluster.zookeeper.storage_size }}
+      deleteClaim: false
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}

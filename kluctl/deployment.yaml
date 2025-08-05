@@ -1,0 +1,6 @@
+deployments:
+  - path: templates/operator
+    barrier: true
+  - path: templates/cluster
+    barrier: true
+  - path: templates/topics
