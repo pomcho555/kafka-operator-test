@@ -23,14 +23,14 @@ kubectl wait --for=condition=Ready pod -l name=strimzi-cluster-operator -n strim
 
 # Wait for Kafka cluster to be ready
 echo "Waiting for Kafka cluster to be ready..."
-#kubectl wait kafka/my-cluster --for=condition=Ready --timeout=600s -n strimzi-kafka
+kubectl wait kafka/my-cluster --for=condition=Ready --timeout=600s -n strimzi-kafka
 
 # Wait for topics to be ready
 echo "Waiting for topics to be ready..."
-# kubectl wait kafkatopic/revolver-ocelot --for=condition=Ready --timeout=120s -n strimzi-kafka
-# kubectl wait kafkatopic/psycho-mantis --for=condition=Ready --timeout=120s -n strimzi-kafka
-# kubectl wait kafkatopic/sniper-wolf --for=condition=Ready --timeout=120s -n strimzi-kafka
-# kubectl wait kafkatopic/liquid-snake --for=condition=Ready --timeout=120s -n strimzi-kafka
+kubectl wait kafkatopic/revolver-ocelot --for=condition=Ready --timeout=120s -n strimzi-kafka
+kubectl wait kafkatopic/psycho-mantis --for=condition=Ready --timeout=120s -n strimzi-kafka
+kubectl wait kafkatopic/sniper-wolf --for=condition=Ready --timeout=120s -n strimzi-kafka
+kubectl wait kafkatopic/liquid-snake --for=condition=Ready --timeout=120s -n strimzi-kafka
 
 # Verification - show complete deployment
 echo "=== Strimzi Deployment Status ==="
